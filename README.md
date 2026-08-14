@@ -1,5 +1,7 @@
 # dsh-client-ui-whale
 
+English | [中文](README.zh.md)
+
 A tiny DeepSeek Harness (DSH) client plugin that puts a DeepSeek-logo whale
 at the right edge of the conversation column. Its water spout grows taller and
 wider as the current session's token **consumption rate** climbs — the faster

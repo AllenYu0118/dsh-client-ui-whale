@@ -1,5 +1,7 @@
 # dsh-client-ui-whale
 
+[English](README.md) | 中文
+
 一个给 DeepSeek Harness（DSH）Web UI 用的小客户端插件：在对话列右侧放一只
 DeepSeek 鲸鱼 logo，喷水的高度、水滴数量与大小会随当前会话的 token **消耗速度**
 （tokens/秒）变化——token 流得越快，鲸鱼喷得越高越猛。
