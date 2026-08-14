@@ -9,6 +9,13 @@ tokens stream, the harder the whale sprays.
 > recolored in the brand blue. DeepSeek is a trademark of DeepSeek; this
 > plugin is an independent, unofficial fan project.
 
+## Demo
+
+![Whale spray demo](docs/whale-demo.gif)
+
+The spout height, droplet count, and droplet size all follow the live token
+consumption rate: idle means no spout, fast streaming means a tall, wide spray.
+
 ## Features
 
 - **Floating whale** pinned just right of the conversation column

@@ -1,7 +1,7 @@
 {
   "name": "@deepseek-ai/dsh-client-ui-whale",
   "version": "0.1.0",
-  "description": "A DeepSeek-logo whale for the DeepSeek Harness web UI whose water spout scales with live token usage.",
+  "description": "A DeepSeek-logo whale for the DeepSeek Harness web UI whose water spout scales with the live token consumption rate.",
   "type": "module",
   "main": "lib/index.js",
   "exports": {
@@ -11,6 +11,7 @@
   },
   "files": [
     "lib",
+    "docs",
     "README.md",
     "README.zh.md",
     "LICENSE"
