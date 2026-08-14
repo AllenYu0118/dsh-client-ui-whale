@@ -31,6 +31,9 @@ its height, droplet count, and droplet size scale with the token rate.
   its height, droplet count, and droplet size scale up — sampled every 400ms
   and exponential-smoothed from the session's `tokenUsage` projection.
 - **Live token badge** under the whale so you can verify the correlation.
+- **Debug panel**: a small ⚙ toggle under the whale opens a panel to manually
+  override spurt size (`level`) and rate (`tokens/s`) — handy for tuning the
+  animation without generating tokens.
 - **Dark-mode aware** badge, zero build step, no runtime dependencies.
 
 ## How it works
