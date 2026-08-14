@@ -11,10 +11,14 @@ tokens stream, the harder the whale sprays.
 
 ## Demo
 
-![Whale spray demo](docs/whale-demo.gif)
+<p align="center">
+  <img src="docs/whale-demo.gif" width="480" alt="Whale spray demo: a DeepSeek-logo whale sits to the right of the chat dialog, spraying water that grows with the token consumption rate" />
+</p>
 
-The spout height, droplet count, and droplet size all follow the live token
-consumption rate: idle means no spout, fast streaming means a tall, wide spray.
+The whale lives just to the **right of the conversation column** (the
+highlighted "NEW" area in the demo). The spout height, droplet count, and
+droplet size all follow the live token consumption rate: idle means no spout,
+fast streaming means a tall, wide spray.
 
 ## Features
 
