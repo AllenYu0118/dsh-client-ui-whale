@@ -38,17 +38,39 @@ token 数据来自 `@deepseek-ai/dsh-token-meter` 的 `tokenUsage` 投影
 
 ## 安装
 
-这是源码级客户端插件：需要能被目标 profile 解析，并加为 Loader 行。
+DSH 客户端插件必须能被目标 profile 的 `node_modules` 解析，并在
+`cordis.patch.yml` 里注册为 Loader 行。
 
-### 方式 A — 符号链接 + patch（最快，无需 pnpm）
+### 1. 添加插件
+
+**从 npm 安装（推荐）：**
+
+```sh
+dsh plugin --profile web add @allen0118/dsh-client-ui-whale
+```
+
+这会在 profile 目录里执行 `pnpm add`，安装已发布的包。
+（等价命令：`cd "$DSH_HOME/profiles/web" && pnpm add @allen0118/dsh-client-ui-whale`。）
+
+**从源码安装（符号链接——适合二次开发）：**
 
 ```sh
 PROFILE="$DSH_HOME/profiles/web"          # 或你的 profile 目录
-mkdir -p "$PROFILE/node_modules/@deepseek-ai"
-ln -sfn "$(pwd)" "$PROFILE/node_modules/@deepseek-ai/dsh-client-ui-whale"
+mkdir -p "$PROFILE/node_modules/@allen0118"
+ln -sfn "$(pwd)" "$PROFILE/node_modules/@allen0118/dsh-client-ui-whale"
 ```
 
-然后在 `$PROFILE/cordis.patch.yml` 追加：
+**从本地 checkout 安装（file 依赖）：**
+
+在 profile 的 `package.json` 里加，然后在 profile 目录跑 `pnpm install`：
+
+```json
+"dependencies": { "@allen0118/dsh-client-ui-whale": "file:/path/to/dsh-client-ui-whale" }
+```
+
+### 2. 注册 Loader 行
+
+在 `$PROFILE/cordis.patch.yml` 追加：
 
 ```yaml
 - insert:
@@ -56,15 +78,7 @@ ln -sfn "$(pwd)" "$PROFILE/node_modules/@deepseek-ai/dsh-client-ui-whale"
       name: '@allen0118/dsh-client-ui-whale'
 ```
 
-### 方式 B — file 依赖 + pnpm
-
-在 profile 的 `package.json` 里加：
-
-```json
-"dependencies": { "@allen0118/dsh-client-ui-whale": "file:/path/to/dsh-client-ui-whale" }
-```
-
-然后在 profile 目录跑 `pnpm install`，并加上同样的 patch 行。
+### 3. 重启
 
 重启 `dsh web` 并刷新——插件集合的变更只在重启后生效。
 

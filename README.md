@@ -44,18 +44,40 @@ projection (the disjoint buckets `uncachedInputTokens`, `outputTokens`,
 
 ## Install
 
-This is a source-level client plugin: it needs to be resolvable from the
-target profile and added as a Loader row.
+A DSH client plugin must be resolvable from the target profile's `node_modules`
+and registered as a Loader row in `cordis.patch.yml`.
 
-### Option A — symlink + patch (quick, no pnpm)
+### 1. Add the plugin
+
+**From npm (recommended):**
+
+```sh
+dsh plugin --profile web add @allen0118/dsh-client-ui-whale
+```
+
+This runs `pnpm add` in the profile directory, installing the published
+package. (Equivalent: `cd "$DSH_HOME/profiles/web" && pnpm add @allen0118/dsh-client-ui-whale`.)
+
+**From source (symlink — for hacking on the plugin):**
 
 ```sh
 PROFILE="$DSH_HOME/profiles/web"          # or your profile dir
-mkdir -p "$PROFILE/node_modules/@deepseek-ai"
-ln -sfn "$(pwd)" "$PROFILE/node_modules/@deepseek-ai/dsh-client-ui-whale"
+mkdir -p "$PROFILE/node_modules/@allen0118"
+ln -sfn "$(pwd)" "$PROFILE/node_modules/@allen0118/dsh-client-ui-whale"
 ```
 
-Then append to `$PROFILE/cordis.patch.yml`:
+**From a local checkout (file dependency):**
+
+Add to the profile's `package.json`, then run `pnpm install` in the profile
+directory:
+
+```json
+"dependencies": { "@allen0118/dsh-client-ui-whale": "file:/path/to/dsh-client-ui-whale" }
+```
+
+### 2. Register the Loader row
+
+Append to `$PROFILE/cordis.patch.yml`:
 
 ```yaml
 - insert:
@@ -63,15 +85,7 @@ Then append to `$PROFILE/cordis.patch.yml`:
       name: '@allen0118/dsh-client-ui-whale'
 ```
 
-### Option B — file dependency + pnpm
-
-Add to the profile's `package.json`:
-
-```json
-"dependencies": { "@allen0118/dsh-client-ui-whale": "file:/path/to/dsh-client-ui-whale" }
-```
-
-then run `pnpm install` in the profile directory and add the same patch row.
+### 3. Restart
 
 Restart `dsh web` and refresh — plugin-set changes only take effect on restart.
 
