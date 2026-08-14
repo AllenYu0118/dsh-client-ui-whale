@@ -102,7 +102,7 @@ ln -sfn "$(pwd)" "$PROFILE/node_modules/@allen0118/dsh-client-ui-whale"
   `useTokenRate()` 里每 400ms 采样一次并做指数平滑。
 - **喷水间隔**：空闲 `2500`ms，随速率按 `2500 × 0.5^(rate/12)` 缩短，下限
   `300`ms。
-- **尺寸**：`spoutH`（4–80px）、`dropCount`（2–6）、`dropSize`（3–6px）。
+- **尺寸**：`spoutH`（4–80px）、`dropCount`（2–10）、`dropSize`（3–6px）。
 - **颜色**：`.whale-drop` / `.whale-svg` / `.whale-count` 的 CSS 规则。
 
 停用：给 `ui-whale` 行加 `disabled: true`（或删除该行）并重启。

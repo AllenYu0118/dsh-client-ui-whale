@@ -110,7 +110,7 @@ There is no config surface yet; edit `lib/client.js` directly:
   rate is sampled every 400ms and exponential-smoothed in `useTokenRate()`.
 - **Spurt interval**: idle `2500`ms, shrinking as `2500 × 0.5^(rate/12)`,
   clamped to `300`ms.
-- **Sizes**: `spoutH` (4–80px), `dropCount` (2–6), `dropSize` (3–6px).
+- **Sizes**: `spoutH` (4–80px), `dropCount` (2–10), `dropSize` (3–6px).
 - **Colors**: the `.whale-drop` / `.whale-svg` / `.whale-count` CSS rules.
 
 To disable, add `disabled: true` to the `ui-whale` row (or delete the row) and
