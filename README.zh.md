@@ -3,8 +3,9 @@
 [English](README.md) | 中文
 
 一个给 DeepSeek Harness（DSH）Web UI 用的小客户端插件：在对话列右侧放一只
-DeepSeek 鲸鱼 logo，喷水的高度、水滴数量与大小会随当前会话的 token **消耗速度**
-（tokens/秒）变化——token 流得越快，鲸鱼喷得越高越猛。
+DeepSeek 鲸鱼 logo。空闲时它每隔约 2.5 秒喷一小股水；随着当前会话的 token
+**消耗速度**（tokens/秒）加快，喷水越来越频繁、水柱越来越大——token 流得
+越快，鲸鱼喷得越猛。
 
 > 鲸鱼是官方 DeepSeek logo 形状（取自随附的 favicon），填充品牌蓝。
 > DeepSeek 是 DeepSeek 的商标；本插件是独立的非官方爱好者项目。
@@ -15,15 +16,16 @@ DeepSeek 鲸鱼 logo，喷水的高度、水滴数量与大小会随当前会话
   <img src="docs/whale-demo.gif" width="480" alt="鲸鱼喷水演示：一只 DeepSeek logo 鲸鱼位于对话气泡右侧，喷水随 token 消耗速度增长" />
 </p>
 
-鲸鱼位于**对话列右侧**（演示图中虚线框标注的「NEW」区域）。喷水高度、水滴
-数量与水滴大小都随实时 token 消耗速度变化：空闲时不喷水，流式生成越快，
-喷得越高越宽。
+鲸鱼位于**对话列右侧**（演示图中虚线框标注的「NEW」区域）。空闲时每约
+2.5 秒喷一小股；有 token 消耗时喷水更频繁（间隔缩短），喷水高度、水滴数量
+与水滴大小随实时 token 消耗速度缩放。
 
 ## 特性
 
 - **悬浮鲸鱼**：紧贴对话列右侧（空间不足时回退到视口角落）。
-- **速度驱动喷水**：喷水高度、水滴数量、水滴大小都随实时 token 消耗速度
-  （tokens/秒）缩放，从 `tokenUsage` 投影每 400ms 采样并做指数平滑。
+- **速度驱动喷水**：空闲时每约 2.5 秒喷一小股；token 消耗速度（tokens/秒）
+  越快，喷水间隔越短（最低约 0.3 秒），喷水高度、水滴数量、水滴大小随之
+  增大——从 `tokenUsage` 投影每 400ms 采样并做指数平滑。
 - **实时 token 徽章**：鲸鱼下方显示当前 token 数，方便核对联动。
 - 支持深色模式徽章、零构建步骤、无运行时依赖。
 
@@ -93,10 +95,12 @@ ln -sfn "$(pwd)" "$PROFILE/node_modules/@allen0118/dsh-client-ui-whale"
 
 - **位置 / 间距**：`useWhalePosition()`（间距为 `16`，回退角落 `right: 28`，
   窄屏回退 `right: 12`）。
-- **喷水曲线**：`TokenWhale` 里的 `level` 表达式，当前是
+- **喷水曲线**：`TokenWhale` 里的 `level` 表达式——空闲 `0.12`，否则
   `Math.min(1, Math.sqrt(rate / 50))`，约 50 tokens/秒时饱和；速率在
   `useTokenRate()` 里每 400ms 采样一次并做指数平滑。
-- **尺寸**：`spoutH`（8–80px）、`dropCount`（2–6）、`dropSize`（3–6px）。
+- **喷水间隔**：空闲 `2500`ms，随速率按 `2500 × 0.5^(rate/12)` 缩短，下限
+  `300`ms。
+- **尺寸**：`spoutH`（4–80px）、`dropCount`（2–6）、`dropSize`（3–6px）。
 - **颜色**：`.whale-drop` / `.whale-svg` / `.whale-count` 的 CSS 规则。
 
 停用：给 `ui-whale` 行加 `disabled: true`（或删除该行）并重启。

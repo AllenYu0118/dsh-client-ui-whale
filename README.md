@@ -3,9 +3,9 @@
 English | [中文](README.zh.md)
 
 A tiny DeepSeek Harness (DSH) client plugin that puts a DeepSeek-logo whale
-at the right edge of the conversation column. Its water spout grows taller and
-wider as the current session's token **consumption rate** climbs — the faster
-tokens stream, the harder the whale sprays.
+at the right edge of the conversation column. It idles with a small periodic
+spurt, and as the session's token **consumption rate** climbs, the spurt fires
+more often and grows bigger — the faster tokens stream, the harder it sprays.
 
 > The whale is the official DeepSeek logo shape (from the shipped favicon),
 > recolored in the brand blue. DeepSeek is a trademark of DeepSeek; this
@@ -18,17 +18,18 @@ tokens stream, the harder the whale sprays.
 </p>
 
 The whale lives just to the **right of the conversation column** (the
-highlighted "NEW" area in the demo). The spout height, droplet count, and
-droplet size all follow the live token consumption rate: idle means no spout,
-fast streaming means a tall, wide spray.
+highlighted "NEW" area in the demo). While idle it gives a small spurt every
+~2.5s; when tokens stream, the spurt fires more often (interval shortens) and
+its height, droplet count, and droplet size scale with the token rate.
 
 ## Features
 
 - **Floating whale** pinned just right of the conversation column
   (falls back to the viewport corner when there is no room).
-- **Rate-driven spout**: spout height, droplet count, and droplet size all
-  scale with the live token consumption rate (tokens/second), sampled every
-  400ms and exponential-smoothed from the session's `tokenUsage` projection.
+- **Rate-driven spurt**: idle gives a small spurt every ~2.5s. As the token
+  rate (tokens/second) rises, the spurt interval shortens (down to ~0.3s) and
+  its height, droplet count, and droplet size scale up — sampled every 400ms
+  and exponential-smoothed from the session's `tokenUsage` projection.
 - **Live token badge** under the whale so you can verify the correlation.
 - **Dark-mode aware** badge, zero build step, no runtime dependencies.
 
@@ -101,10 +102,12 @@ There is no config surface yet; edit `lib/client.js` directly:
 
 - **Position / gap**: `useWhalePosition()` (gap is `16`, fallback corner is
   `right: 28`, narrow-viewport fallback is `right: 12`).
-- **Spout curve**: the `level` expression in `TokenWhale` — currently
+- **Spout curve**: the `level` expression in `TokenWhale` — idle `0.12`, else
   `Math.min(1, Math.sqrt(rate / 50))`, saturating near 50 tokens/second. The
   rate is sampled every 400ms and exponential-smoothed in `useTokenRate()`.
-- **Sizes**: `spoutH` (8–80px), `dropCount` (2–6), `dropSize` (3–6px).
+- **Spurt interval**: idle `2500`ms, shrinking as `2500 × 0.5^(rate/12)`,
+  clamped to `300`ms.
+- **Sizes**: `spoutH` (4–80px), `dropCount` (2–6), `dropSize` (3–6px).
 - **Colors**: the `.whale-drop` / `.whale-svg` / `.whale-count` CSS rules.
 
 To disable, add `disabled: true` to the `ui-whale` row (or delete the row) and
