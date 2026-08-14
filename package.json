@@ -1,0 +1,41 @@
+{
+  "name": "@deepseek-ai/dsh-client-ui-whale",
+  "version": "0.1.0",
+  "description": "A DeepSeek-logo whale for the DeepSeek Harness web UI whose water spout scales with live token usage.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": { "default": "./lib/index.js" },
+    "./client": { "default": "./lib/client.js" },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "README.md",
+    "README.zh.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "check": "node --check lib/index.js && node --check lib/client.js"
+  },
+  "keywords": [
+    "deepseek",
+    "deepseek-harness",
+    "dsh",
+    "plugin",
+    "client-plugin",
+    "whale",
+    "token",
+    "react"
+  ],
+  "dsh": {
+    "client": {
+      "platform": "web"
+    }
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AllenYu0118/dsh-client-ui-whale.git"
+  }
+}
