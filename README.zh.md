@@ -53,7 +53,7 @@ ln -sfn "$(pwd)" "$PROFILE/node_modules/@deepseek-ai/dsh-client-ui-whale"
 ```yaml
 - insert:
     - id: ui-whale
-      name: '@deepseek-ai/dsh-client-ui-whale'
+      name: '@allen1989/dsh-client-ui-whale'
 ```
 
 ### 方式 B — file 依赖 + pnpm
@@ -61,7 +61,7 @@ ln -sfn "$(pwd)" "$PROFILE/node_modules/@deepseek-ai/dsh-client-ui-whale"
 在 profile 的 `package.json` 里加：
 
 ```json
-"dependencies": { "@deepseek-ai/dsh-client-ui-whale": "file:/path/to/dsh-client-ui-whale" }
+"dependencies": { "@allen1989/dsh-client-ui-whale": "file:/path/to/dsh-client-ui-whale" }
 ```
 
 然后在 profile 目录跑 `pnpm install`，并加上同样的 patch 行。

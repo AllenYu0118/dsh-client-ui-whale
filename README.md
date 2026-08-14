@@ -60,7 +60,7 @@ Then append to `$PROFILE/cordis.patch.yml`:
 ```yaml
 - insert:
     - id: ui-whale
-      name: '@deepseek-ai/dsh-client-ui-whale'
+      name: '@allen1989/dsh-client-ui-whale'
 ```
 
 ### Option B — file dependency + pnpm
@@ -68,7 +68,7 @@ Then append to `$PROFILE/cordis.patch.yml`:
 Add to the profile's `package.json`:
 
 ```json
-"dependencies": { "@deepseek-ai/dsh-client-ui-whale": "file:/path/to/dsh-client-ui-whale" }
+"dependencies": { "@allen1989/dsh-client-ui-whale": "file:/path/to/dsh-client-ui-whale" }
 ```
 
 then run `pnpm install` in the profile directory and add the same patch row.
