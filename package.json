@@ -1,5 +1,5 @@
 {
-  "name": "@allen1989/dsh-client-ui-whale",
+  "name": "@allen0118/dsh-client-ui-whale",
   "version": "0.1.0",
   "description": "A DeepSeek-logo whale for the DeepSeek Harness web UI whose water spout scales with the live token consumption rate.",
   "type": "module",
