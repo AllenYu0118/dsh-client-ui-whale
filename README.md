@@ -2,8 +2,8 @@
 
 A tiny DeepSeek Harness (DSH) client plugin that puts a DeepSeek-logo whale
 at the right edge of the conversation column. Its water spout grows taller and
-wider as the current session's token usage climbs — the more tokens you burn,
-the harder the whale sprays.
+wider as the current session's token **consumption rate** climbs — the faster
+tokens stream, the harder the whale sprays.
 
 > The whale is the official DeepSeek logo shape (from the shipped favicon),
 > recolored in the brand blue. DeepSeek is a trademark of DeepSeek; this
@@ -13,8 +13,9 @@ the harder the whale sprays.
 
 - **Floating whale** pinned just right of the conversation column
   (falls back to the viewport corner when there is no room).
-- **Token-driven spout**: spout height, droplet count, and droplet size all
-  scale with live token usage from the session's `tokenUsage` projection.
+- **Rate-driven spout**: spout height, droplet count, and droplet size all
+  scale with the live token consumption rate (tokens/second), sampled every
+  400ms and exponential-smoothed from the session's `tokenUsage` projection.
 - **Live token badge** under the whale so you can verify the correlation.
 - **Dark-mode aware** badge, zero build step, no runtime dependencies.
 
@@ -74,7 +75,8 @@ There is no config surface yet; edit `lib/client.js` directly:
 - **Position / gap**: `useWhalePosition()` (gap is `16`, fallback corner is
   `right: 28`, narrow-viewport fallback is `right: 12`).
 - **Spout curve**: the `level` expression in `TokenWhale` — currently
-  `Math.min(1, Math.pow(total / 150000, 0.4))`, saturating near 150K tokens.
+  `Math.min(1, Math.sqrt(rate / 50))`, saturating near 50 tokens/second. The
+  rate is sampled every 400ms and exponential-smoothed in `useTokenRate()`.
 - **Sizes**: `spoutH` (8–80px), `dropCount` (2–6), `dropSize` (3–6px).
 - **Colors**: the `.whale-drop` / `.whale-svg` / `.whale-count` CSS rules.
 
